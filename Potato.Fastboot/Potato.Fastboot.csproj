@@ -4,13 +4,12 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>mashed-potatoes</Authors>
     <Company />
-    <Description>A small wrapper over LibUsbDotNet for easy and convenient communication with mobile devices in Fastboot mode.
-</Description>
+    <Description>A small wrapper over LibUsbDotNet for easy and convenient communication with mobile devices in Fastboot mode.</Description>
     <Copyright>Copyright 2020 (C) mashed-potatoes</Copyright>
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageReleaseNotes>First release!</PackageReleaseNotes>
-    <PackageTags></PackageTags>
+    <PackageTags>fastboot libusb android hardware</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/mashed-potatoes/Potato.Fastboot.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/mashed-potatoes/Potato.Fastboot</PackageProjectUrl>

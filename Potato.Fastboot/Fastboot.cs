@@ -95,10 +95,12 @@ namespace Potato.Fastboot
         {
             var devices = context.List();
             device = devices.FirstOrDefault(x => x.VendorId == USB_VID && x.ProductId == USB_PID);
+
             if (device == null)
             {
                 throw new Exception("No devices available.");
             }
+
             device.Open();
             device.ClaimInterface(device.Configs[0].Interfaces[0].Number);
         }
@@ -214,8 +216,6 @@ namespace Potato.Fastboot
                 TransferBlock(stream, writeEndpoint, buffer, (int)length);
             }
 
-
-
             var resBuffer = new byte[64];
 
             readEndpoint.Read(resBuffer, Timeout, out _);
@@ -250,6 +250,7 @@ namespace Potato.Fastboot
         public static string[] GetDevices()
         {
             var devices = new List<string>();
+
             using (var context = new UsbContext())
             {
                 var allDevices = context.List();
@@ -269,6 +270,7 @@ namespace Potato.Fastboot
                     usbRegistry.Close();
                 }
             }
+
             return devices.ToArray();
         }
 
