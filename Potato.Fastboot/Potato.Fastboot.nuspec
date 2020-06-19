@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Potato.Fastboot</id>
-    <version>1.0.0-beta</version>
+    <version>1.0.1-pre</version>
     <title>Potato.Fastboot</title>
     <authors>mashed-potatoes</authors>
     <owners>mashed-potatoes</owners>
@@ -11,7 +11,7 @@
     <projectUrl>https://github.com/mashed-potatoes/Potato.Fastboot</projectUrl>
     <iconUrl>https://mpotato.me/img/potato.png</iconUrl>
     <description>A small wrapper over LibUsbDotNet for easy and convenient communication with mobile devices in Fastboot mode.</description>
-    <releaseNotes>First release!</releaseNotes>
+    <releaseNotes>Minor changes.</releaseNotes>
     <copyright>Copyright 2020 (C) mashed-potatoes</copyright>
     <tags>fastboot libusb android hardware</tags>
   </metadata>
