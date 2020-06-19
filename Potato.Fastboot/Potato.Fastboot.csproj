@@ -6,9 +6,14 @@
     <Company />
     <Description>A small wrapper over LibUsbDotNet for easy and convenient communication with mobile devices in Fastboot mode.
 </Description>
-    <Copyright>Copyright 2020 (c) mashed-potatoes</Copyright>
+    <Copyright>Copyright 2020 (C) mashed-potatoes</Copyright>
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageReleaseNotes>First release!</PackageReleaseNotes>
+    <PackageTags></PackageTags>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/mashed-potatoes/Potato.Fastboot.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mashed-potatoes/Potato.Fastboot</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
