@@ -10,6 +10,13 @@ using LibUsbDotNet.Main;
 
 namespace Potato.Fastboot
 {
+    /// <summary>
+    /// The main Fastboot class.
+    /// Contains methods to communicate with fastboot device.
+    /// </summary>
+    /// <remarks>
+    /// Available methods: wait, connect, disconnect, get serial number, execute command, upload data and get devices.
+    /// </remarks>
     public class Fastboot
     {
         private const int USB_VID = 0x18D1;
@@ -67,6 +74,10 @@ namespace Potato.Fastboot
             }
         }
 
+
+        /// <summary>
+        /// Wait of any device.
+        /// </summary>
         public void Wait()
         {
             var counter = 0;
@@ -91,6 +102,9 @@ namespace Potato.Fastboot
             }
         }
 
+        /// <summary>
+        /// Connect to first fastboot device.
+        /// </summary>
         public void Connect()
         {
             var devices = context.List();
@@ -105,16 +119,28 @@ namespace Potato.Fastboot
             device.ClaimInterface(device.Configs[0].Interfaces[0].Number);
         }
 
+        /// <summary>
+        /// Disconnect from device.
+        /// </summary>
         public void Disconnect()
         {
             device.Close();
         }
 
+        /// <summary>
+        /// Get device serial number.
+        /// </summary>
+        /// <returns>Serial number</returns>
         public string GetSerialNumber()
         {
             return device.Info.SerialNumber;
         }
 
+        /// <summary>
+        /// Send command to device and read response.
+        /// </summary>
+        /// <param name="command">Command as bytes array</param>
+        /// <returns>Parsed response from device</returns>
         public Response Command(byte[] command)
         {
             var writeEndpoint = device.OpenEndpointWriter(WriteEndpointID.Ep01);
@@ -175,6 +201,10 @@ namespace Potato.Fastboot
             };
         }
 
+        /// <summary>
+        /// Send data command to device.
+        /// </summary>
+        /// <param name="size">Data size (bytes)</param>
         private void SendDataCommand(long size)
         {
             if (Command($"download:{size:X8}").Status != Status.Data)
@@ -183,6 +213,13 @@ namespace Potato.Fastboot
             }
         }
 
+        /// <summary>
+        /// Transfer block to device from stream to USB write endpoint with fixed size
+        /// </summary>
+        /// <param name="stream">Input stream</param>
+        /// <param name="writeEndpoint">USB write endpoint</param>
+        /// <param name="buffer">Block of data</param>
+        /// <param name="size">Data size (bytes)</param>
         private void TransferBlock(FileStream stream, UsbEndpointWriter writeEndpoint, byte[] buffer, int size)
         {
             stream.Read(buffer, 0, size);
@@ -194,6 +231,10 @@ namespace Potato.Fastboot
             }
         }
 
+        /// <summary>
+        /// Upload data from <c>FileStream</c> to device's buffer
+        /// </summary>
+        /// <param name="stream">Input FileStream</param>
         public void UploadData(FileStream stream)
         {
             var writeEndpoint = device.OpenEndpointWriter(WriteEndpointID.Ep01);
@@ -239,6 +280,10 @@ namespace Potato.Fastboot
             }
         }
 
+        /// <summary>
+        /// Upload data from file to device's buffer
+        /// </summary>
+        /// <param name="path">Path to file</param>
         public void UploadData(string path)
         {
             using (var stream = new FileStream(path, FileMode.Open))
@@ -247,6 +292,10 @@ namespace Potato.Fastboot
             }
         }
 
+        /// <summary>
+        /// Get list of available devices
+        /// </summary>
+        /// <returns>Array of serial numbers</returns>
         public static string[] GetDevices()
         {
             var devices = new List<string>();
@@ -274,6 +323,11 @@ namespace Potato.Fastboot
             return devices.ToArray();
         }
 
+        /// <summary>
+        /// Send command to device and read response.
+        /// </summary>
+        /// <param name="command">Command</param>
+        /// <returns>Parsed response from device</returns>
         public Response Command(string command)
         {
             return Command(Encoding.ASCII.GetBytes(command));

@@ -1,21 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <Authors>mashed-potatoes</Authors>
     <Company />
     <Description>A small wrapper over LibUsbDotNet for easy and convenient communication with mobile devices in Fastboot mode.</Description>
     <Copyright>Copyright 2020 (C) mashed-potatoes</Copyright>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <PackageLicenseFile></PackageLicenseFile>
-    <PackageReleaseNotes>Minor changes.</PackageReleaseNotes>
+    <PackageReleaseNotes>Switch to .NET Framework</PackageReleaseNotes>
     <PackageTags>fastboot libusb android hardware</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/mashed-potatoes/Potato.Fastboot.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/mashed-potatoes/Potato.Fastboot</PackageProjectUrl>
     <AssemblyVersion>1.0.1</AssemblyVersion>
     <FileVersion>1.0.1</FileVersion>
-    <Version>1.0.1-beta</Version>
+    <Version>1.0.2-beta</Version>
   </PropertyGroup>
 
   <ItemGroup>
