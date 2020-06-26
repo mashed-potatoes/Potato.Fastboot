@@ -1,6 +1,7 @@
 # Potato.Fastboot
 [![Build Status](https://travis-ci.org/mashed-potatoes/Potato.Fastboot.svg?branch=master)](https://travis-ci.org/mashed-potatoes/Potato.Fastboot)
 [![NuGet Version](https://img.shields.io/nuget/v/Potato.Fastboot.svg)](https://www.nuget.org/packages/Potato.Fastboot)
+[![Nuget](https://img.shields.io/nuget/dt/Potato.Fastboot)](https://www.nuget.org/packages/Potato.Fastboot)
 ![GPL-3.0](https://img.shields.io/github/license/mashed-potatoes/Potato.Fastboot.svg)
 
 A small wrapper over LibUsbDotNet for easy and convenient communication with mobile devices in Fastboot mode.
