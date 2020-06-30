@@ -26,8 +26,8 @@ namespace Potato.Fastboot
 
         public int Timeout { get; set; } = 3000;
 
-        private readonly UsbContext context;
-        private IUsbDevice device;
+        private UsbDevice device;
+        private string targetSerialNumber;
 
         public enum Status
         {
@@ -51,10 +51,14 @@ namespace Potato.Fastboot
             }
         }
 
-        public Fastboot(LogLevel logLevel = LogLevel.None)
+        public Fastboot(string serial)
         {
-            context = new UsbContext();
-            context.SetDebugLevel(logLevel);
+            targetSerialNumber = serial;
+        }
+
+        public Fastboot()
+        {
+            targetSerialNumber = null;
         }
 
         private Status GetStatusFromString(string header)
@@ -81,20 +85,19 @@ namespace Potato.Fastboot
         public void Wait()
         {
             var counter = 0;
-            UsbDeviceCollection devices;
 
             while (true)
             {
+                var allDevices = UsbDevice.AllDevices;
+
+                if (allDevices.Any(x => x.Vid == USB_VID & x.Pid == USB_PID))
+                {
+                    return;
+                }
+
                 if (counter == 50)
                 {
                     throw new Exception("Timeout error.");
-                }
-
-                devices = context.List();
-
-                if (devices.Any(x => x.VendorId == USB_VID && x.ProductId == USB_PID))
-                {
-                    return;
                 }
 
                 Thread.Sleep(500);
@@ -107,16 +110,31 @@ namespace Potato.Fastboot
         /// </summary>
         public void Connect()
         {
-            var devices = context.List();
-            device = devices.FirstOrDefault(x => x.VendorId == USB_VID && x.ProductId == USB_PID);
+            UsbDeviceFinder finder;
+
+            if (string.IsNullOrWhiteSpace(targetSerialNumber))
+            {
+                finder = new UsbDeviceFinder(USB_VID, USB_PID);
+            }
+            else
+            {
+                finder = new UsbDeviceFinder(USB_VID, USB_PID, targetSerialNumber);
+            }
+
+            device = UsbDevice.OpenUsbDevice(finder);
 
             if (device == null)
             {
                 throw new Exception("No devices available.");
             }
 
-            device.Open();
-            device.ClaimInterface(device.Configs[0].Interfaces[0].Number);
+            var wDev = device as IUsbDevice;
+
+            if (wDev is IUsbDevice)
+            {
+                wDev.SetConfiguration(1);
+                wDev.ClaimInterface(0);
+            }
         }
 
         /// <summary>
@@ -133,7 +151,7 @@ namespace Potato.Fastboot
         /// <returns>Serial number</returns>
         public string GetSerialNumber()
         {
-            return device.Info.SerialNumber;
+            return device.Info.SerialString;
         }
 
         /// <summary>
@@ -298,25 +316,23 @@ namespace Potato.Fastboot
         /// <returns>Array of serial numbers</returns>
         public static string[] GetDevices()
         {
+            UsbDevice dev;
+
             var devices = new List<string>();
 
-            using (var context = new UsbContext())
+            var allDevices = UsbDevice.AllDevices;
+
+            foreach (UsbRegistry usbRegistry in allDevices)
             {
-                var allDevices = context.List();
-
-                foreach (var usbRegistry in allDevices)
+                if (usbRegistry.Vid != USB_VID || usbRegistry.Pid != USB_PID)
                 {
-                    if (usbRegistry.VendorId != USB_VID || usbRegistry.ProductId != USB_PID)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    if (usbRegistry.TryOpen())
-                    {
-                        devices.Add(usbRegistry.Info.SerialNumber);
-                    }
-
-                    usbRegistry.Close();
+                if (usbRegistry.Open(out dev))
+                {
+                    devices.Add(dev.Info.SerialString);
+                    dev.Close();
                 }
             }
 

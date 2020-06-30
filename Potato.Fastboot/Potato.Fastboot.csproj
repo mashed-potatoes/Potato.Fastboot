@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
@@ -8,18 +8,18 @@
     <Copyright>Copyright 2020 (C) mashed-potatoes</Copyright>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <PackageLicenseFile></PackageLicenseFile>
-    <PackageReleaseNotes>Switch to .NET Framework</PackageReleaseNotes>
+    <PackageReleaseNotes>Rollback LibUsbDotNet version from 3.0.81-alpha to 2.2.29</PackageReleaseNotes>
     <PackageTags>fastboot libusb android hardware</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/mashed-potatoes/Potato.Fastboot.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/mashed-potatoes/Potato.Fastboot</PackageProjectUrl>
-    <AssemblyVersion>1.0.1</AssemblyVersion>
-    <FileVersion>1.0.1</FileVersion>
-    <Version>1.0.2-beta</Version>
+    <AssemblyVersion>1.1.0</AssemblyVersion>
+    <FileVersion>1.1.0</FileVersion>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LibUsbDotNet" Version="3.0.81-alpha" />
+    <PackageReference Include="LibUsbDotNet" Version="2.2.29" />
   </ItemGroup>
 
 </Project>
