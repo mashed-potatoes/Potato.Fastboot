@@ -78,7 +78,6 @@ namespace Potato.Fastboot
             }
         }
 
-
         /// <summary>
         /// Wait of any device.
         /// </summary>
